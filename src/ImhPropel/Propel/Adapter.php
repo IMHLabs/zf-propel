@@ -288,37 +288,4 @@ class Adapter implements ServiceLocatorAwareInterface
         }
         return array();
 	}
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-//============================
-//HERE
-//============================
-    
-    /**
-     * @var Module Data Directory
-     */
-//    protected static $_data_dir;
-
-    /**
-     * @var Module Data Directory
-     */
-//    protected static $_module_path;
-
-    
-        
-    
-    
-    
-
 }
