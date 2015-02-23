@@ -1,0 +1,28 @@
+{
+    "name":         "IMHLabs/zf-propel",
+    "description":  "IMHLabs Zf2 Propel module",
+    "type":         "library",
+    "keywords": [
+        "zf2",
+        "Propel"
+    ],
+    "authors": [
+        {
+            "name":      "Inmotion Hosting",
+            "email":     "development@inmotionhosting.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.3",
+        "propel/propel": "2.0.*@dev"
+    },
+    "autoload": {
+        "psr-0": {
+            "ImhPropel\\": "src/"
+        },
+        "classmap": [
+            "./Module.php"
+        ]
+    }
+}
