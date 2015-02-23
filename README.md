@@ -118,22 +118,53 @@ return array(
 
 ## Console Commands
 
-php index.php propel install all
- - Creates connection information for all Modules
+php index.php propel build [all|NAMESPACE|[comma delimited NAMESPACES]                
+ - Build the model classes based on Propel XML schemas
+ 
+php index.php propel build-sql [all|NAMESPACE|[comma delimited NAMESPACES]            
+ - Build SQL files
 
-php index.php propel install [ModuleNamespace]
- - Creates connection information for one Module
+php index.php propel diff [all|NAMESPACE|[comma delimited NAMESPACES]                 
+ - Generate diff classes
 
-php index.php propel migration all
- - Runs Propel migration:diff on all Modules and generate migrations as appropriate
+php index.php propel migration-data [all|NAMESPACE|[comma delimited NAMESPACES]       
+ - Generate data migration file
 
-php index.php propel migration [ModuleNamespace]
- - Runs Propel migration:diff on one Module and generate migrations as appropriate
+php index.php propel migrate-data [all|NAMESPACE|[comma delimited NAMESPACES]         
+ - Generate data migration file
 
-php index.php propel update all
- - Updates application with most recent changes, applies Migrations, generates new SQL files and 
-   generates Propel classes for all Modules
+php index.php propel down [all|NAMESPACE|[comma delimited NAMESPACES]                 
+ - Execute migrations down
 
-php index.php propel update [ModuleNamespace]
- - Updates application with most recent changes, applies Migrations, generates new SQL files and 
-   generates Propel classes for one Module
+php index.php propel migrate [all|NAMESPACE|[comma delimited NAMESPACES]              
+ - Execute all pending migrations
+
+php index.php propel status [all|NAMESPACE|[comma delimited NAMESPACES]               
+ - Get migration status
+
+php index.php propel up [all|NAMESPACE|[comma delimited NAMESPACES]                   
+ - Execute migrations up
+
+php index.php propel migration-diff [all|NAMESPACE|[comma delimited NAMESPACES]       
+ - Generate diff classes
+
+php index.php propel migration-down [all|NAMESPACE|[comma delimited NAMESPACES]       
+ - Execute migrations down
+
+php index.php propel migration-migrate [all|NAMESPACE|[comma delimited NAMESPACES]    
+ - Execute all pending migrations
+
+php index.php propel migration-status [all|NAMESPACE|[comma delimited NAMESPACES]     
+ - Get migration status
+
+php index.php propel migration-up [all|NAMESPACE|[comma delimited NAMESPACES]         
+ - Execute migrations up
+
+php index.php propel model-build [all|NAMESPACE|[comma delimited NAMESPACES]          
+ - Build the model classes based on Propel XML schemas
+
+php index.php propel sql-build [all|NAMESPACE|[comma delimited NAMESPACES]            
+ - Build SQL files
+
+php index.php propel update [all|NAMESPACE|[comma delimited NAMESPACES]               
+ - Execute pending migrations, build SQL files, build Propel classes
