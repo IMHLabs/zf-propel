@@ -94,45 +94,49 @@ class PropelV2 extends Adapter
 	        $excludedTables = array();
 	        $modulemanager  = $this->getServiceLocator()->get('ModuleManager');
 	        $moduleObj 		= $modulemanager->loadModule($this->getModuleName());
-	        $module_config 	= $moduleObj->getConfig();
-	        $connections = array_keys($module_config['propel']['database']['connections']);
-	        //Get List of Modules pointing at database of current Module
-	        $modules = $modulemanager->getModules();
-	        foreach ($modules as $module) {
-	            if ($module != $this->getModuleName()) {
-	                $moduleObj 		= $modulemanager->loadModule($module);
-	                $module_config 	= $moduleObj->getConfig();
-	                if (isset($module_config['propel'])) {
-	                    $module_connections = array_keys($module_config['propel']['database']['connections']);
-	                    if (array_intersect($connections, $module_connections)) {
-	                        // Get Module Schema Path
-	                        $module_schema_path      = realpath($module_config['propel']['paths']['schema']);
-	                        //Used same connection, Read schema
-	                        $xml = (array) simplexml_load_file($module_schema_path . '/schema.xml');
-	                        foreach ($xml['table'] as $table) {
-	                            $table = (array) $table;
-	                            $attributes = $table['@attributes'];
-	                            $excludedTables[] = $attributes['name'];
-	                        }
-	                    }
-	                }
-	            }
-	        }
-	        $propel_command			= sprintf(
-	                '%s/bin/propel migration:diff --config-dir="%s" --schema-dir="%s" --output-dir="%s"',
-	                VENDOR_PATH,
-	                $this->getModuleConfigPath(),
-	                $this->getModuleSchemaPath(),
-	                $this->getModuleMigrationPath());
-	        foreach ($excludedTables as $table) {
-	            $propel_command .= ' --skip-tables="' . $table . '"';
-	        }
-	        $results = exec($propel_command,$output);
-	        print "Building Migrations Files for Module: " . $this->getModuleName() . "\n";
-	        print implode("\n",$output);
-	        if (preg_match('/no diff to generate/',$results)) {
-	            return false;
-	        }
+            if (method_exists ( $moduleObj, 'getConfig')) {
+    	        $module_config 	= $moduleObj->getConfig();
+    	        $connections = array_keys($module_config['propel']['database']['connections']);
+    	        //Get List of Modules pointing at database of current Module
+    	        $modules = $modulemanager->getModules();
+    	        foreach ($modules as $module) {
+    	            if ($module != $this->getModuleName()) {
+    	                $moduleObj 		= $modulemanager->loadModule($module);
+                        if (method_exists ( $moduleObj, 'getConfig')) {
+        	                $module_config 	= $moduleObj->getConfig();
+        	                if (isset($module_config['propel'])) {
+        	                    $module_connections = array_keys($module_config['propel']['database']['connections']);
+        	                    if (array_intersect($connections, $module_connections)) {
+        	                        // Get Module Schema Path
+        	                        $module_schema_path      = realpath($module_config['propel']['paths']['schema']);
+        	                        //Used same connection, Read schema
+        	                        $xml = (array) simplexml_load_file($module_schema_path . '/schema.xml');
+        	                        foreach ($xml['table'] as $table) {
+        	                            $table = (array) $table;
+        	                            $attributes = $table['@attributes'];
+        	                            $excludedTables[] = $attributes['name'];
+        	                        }
+        	                    }
+        	                }
+                        }
+    	            }
+    	        }
+    	        $propel_command			= sprintf(
+    	                '%s/bin/propel migration:diff --config-dir="%s" --schema-dir="%s" --output-dir="%s"',
+    	                VENDOR_PATH,
+    	                $this->getModuleConfigPath(),
+    	                $this->getModuleSchemaPath(),
+    	                $this->getModuleMigrationPath());
+    	        foreach ($excludedTables as $table) {
+    	            $propel_command .= ' --skip-tables="' . $table . '"';
+    	        }
+    	        $results = exec($propel_command,$output);
+    	        print "Building Migrations Files for Module: " . $this->getModuleName() . "\n";
+    	        print implode("\n",$output);
+    	        if (preg_match('/no diff to generate/',$results)) {
+    	            return false;
+    	        }
+            }
 	        return true;
 	    }
 	}

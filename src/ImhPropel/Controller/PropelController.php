@@ -202,12 +202,14 @@ class PropelController extends AbstractActionController
     {
 		$modulemanager  = $this->getServiceLocator()->get('ModuleManager');
 		$moduleObj 		= $modulemanager->loadModule($module);
-        $module_config 	= $moduleObj->getConfig();
-        //Check if module has configuration for propel
-        if (isset($module_config['propel'])) {
-            $propelAdapter = new \ImhPropel\Propel\Adapter\PropelV2($this->getServiceLocator());
-            $propelAdapter->setModule($module);
-            return $propelAdapter;
+        if (method_exists ( $moduleObj, 'getConfig')) {
+    		$module_config 	= $moduleObj->getConfig();
+            //Check if module has configuration for propel
+            if (isset($module_config['propel'])) {
+                $propelAdapter = new \ImhPropel\Propel\Adapter\PropelV2($this->getServiceLocator());
+                $propelAdapter->setModule($module);
+                return $propelAdapter;
+            }
         }
         return null;
     }
