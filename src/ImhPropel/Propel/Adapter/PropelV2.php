@@ -51,7 +51,7 @@ class PropelV2 extends Adapter
         if ($configCreated) {
 			$propel_command			= sprintf(
 				'%s/bin/propel model:build --config-dir="%s" --schema-dir="%s" --output-dir="%s"',
-			    VENDOR_PATH,
+			    $this->_getVendorPath(),
 			    $this->getModuleConfigPath(),
 				$this->getModuleSchemaPath(),
 				$this->getModuleClassPath());
@@ -72,7 +72,7 @@ class PropelV2 extends Adapter
         if ($configCreated) {
 			$propel_command	= sprintf(
 				'%s/bin/propel sql:build --config-dir="%s" --schema-dir="%s" --output-dir="%s" --overwrite',
-			    VENDOR_PATH,
+			    $this->_getVendorPath(),
 			    $this->getModuleConfigPath(),
 				$this->getModuleSchemaPath(),
 				$this->getModuleSqlPath());
@@ -123,7 +123,7 @@ class PropelV2 extends Adapter
     	        }
     	        $propel_command			= sprintf(
     	                '%s/bin/propel migration:diff --config-dir="%s" --schema-dir="%s" --output-dir="%s"',
-    	                VENDOR_PATH,
+    	                $this->_getVendorPath(),
     	                $this->getModuleConfigPath(),
     	                $this->getModuleSchemaPath(),
     	                $this->getModuleMigrationPath());
@@ -175,7 +175,7 @@ class PropelV2 extends Adapter
         if ($configCreated) {
 			$propel_command			= sprintf(
     	        '%s/bin/propel migration:down --config-dir="%s" --output-dir="%s"',
-			    VENDOR_PATH,
+			    $this->_getVendorPath(),
 			    $this->getModuleConfigPath(),
 				$this->getModuleMigrationPath());
 			$results = exec($propel_command,$output);
@@ -195,7 +195,7 @@ class PropelV2 extends Adapter
         if ($configCreated) {
 			$propel_command			= sprintf(
 				'%s/bin/propel migrate --config-dir="%s" --output-dir="%s"',
-			    VENDOR_PATH,
+			    $this->_getVendorPath(),
 			    $this->getModuleConfigPath(),
 				$this->getModuleMigrationPath());
 			$results = exec($propel_command,$output);
@@ -215,7 +215,7 @@ class PropelV2 extends Adapter
         if ($configCreated) {
 			$propel_command			= sprintf(
     	        '%s/bin/propel migration:status --config-dir="%s" --output-dir="%s"',
-			    VENDOR_PATH,
+			    $this->_getVendorPath(),
 			    $this->getModuleConfigPath(),
 				$this->getModuleMigrationPath());
 			$results = exec($propel_command,$output);
@@ -235,7 +235,7 @@ class PropelV2 extends Adapter
         if ($configCreated) {
 			$propel_command			= sprintf(
     	        '%s/bin/propel migration:up --config-dir="%s" --output-dir="%s"',
-			    VENDOR_PATH,
+			    $this->_getVendorPath(),
 			    $this->getModuleConfigPath(),
 				$this->getModuleMigrationPath());
 			$results = exec($propel_command,$output);

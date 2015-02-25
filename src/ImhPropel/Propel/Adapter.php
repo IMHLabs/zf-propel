@@ -150,7 +150,6 @@ class Adapter implements ServiceLocatorAwareInterface
     /**
 	 * Get Module Schema Path
 	 *
-     * @param string $module Module Name
 	 * @return void
 	 */
     public function getModuleSchemaPath()
@@ -161,7 +160,6 @@ class Adapter implements ServiceLocatorAwareInterface
     /**
 	 * Get Module Class Path
 	 *
-     * @param string $module Module Name
 	 * @return void
 	 */
     public function getModuleClassPath()
@@ -172,7 +170,6 @@ class Adapter implements ServiceLocatorAwareInterface
     /**
 	 * Get Module Schema Path
 	 *
-     * @param string $module Module Name
 	 * @return void
 	 */
     public function getModuleMigrationPath()
@@ -288,4 +285,15 @@ class Adapter implements ServiceLocatorAwareInterface
         }
         return array();
 	}
+	
+	/**
+	 * Get vendor path
+	 *
+	 * @return string
+	 */
+	protected function _getVendorPath()
+	{
+	    return realpath('./vendor');
+	}
+	
 }
