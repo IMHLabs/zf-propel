@@ -270,6 +270,13 @@ class Adapter implements ServiceLocatorAwareInterface
                                 $settings['password']
                             );
                             break;
+                        case 'sqlite':
+                            $settings['dsn'] = sprintf(
+                                "sqlite:%s/%s",
+                                $settings['host'],
+                                $settings['dbname']
+                            );
+                            break;
                     }
                 }
                 //Unset Module specific settings, not needed for propel configuration

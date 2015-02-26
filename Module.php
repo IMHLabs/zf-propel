@@ -140,15 +140,45 @@ class Module implements ConsoleUsage, Config, Autoloader, BootstrapListener
         $db_settings = array();
         foreach ($config as $key => $settings) {
              $settings = array_merge($default_settings,$settings);
+             $settings['adapter']              = ($settings['adapter']) ?: 'mysql';
+             $settings['host']                 = ($settings['host'])    ?: 'localhost';
+             $settings['dbname']               = ($settings['dbname'])  ?: $key;
              $dsn = null;
              if (isset($settings['dsn'])) {
                  $dsn = $settings['dsn'];
              } elseif (isset($settings['dbname'])) {
-                 $dsn = sprintf(
-                         "%s:host=%s;dbname=%s",
-                         $settings['adapter'],
-                         $settings['host'],
-                         $settings['dbname']);
+                 switch ($settings['adapter']) {
+                    case 'mysql':
+                        $dsn = sprintf(
+                            "mysql:host=%s;dbname=%s",
+                            $settings['host'],
+                            $settings['dbname']
+                        );
+                        break;
+                    case 'oci':
+                        $dsn = sprintf(
+                            "oci:dbname=//%s/%s",
+                            $settings['host'],
+                            $settings['dbname']
+                        );
+                        break;
+                    case 'pgsql':
+                        $dsn = sprintf(
+                            "pgsql:host=%s;port=5432;dbname=%s;user=%s;password=%s",
+                            $settings['host'],
+                            $settings['dbname'],
+                            $settings['user'],
+                            $settings['password']
+                        );
+                        break;
+                    case 'sqlite':
+                        $dsn = sprintf(
+                            "sqlite:%s/%s",
+                            $settings['host'],
+                            $settings['dbname']
+                        );
+                        break;
+                 }
              }
              if ($dsn) {
                 $serviceContainer->setAdapterClass($key, $settings['adapter']);
