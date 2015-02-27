@@ -28,14 +28,17 @@ class PropelTest extends \PHPUnit_Framework_TestCase
     {
         $fixturePath = realpath($file);
         $this->resetDatabase();
+        $tablelist = array();
         if ($fixturePath) {
             $xml = simplexml_load_file($fixturePath);
             $tables = (array) $xml;
             foreach ($tables as $table => $records) {
+                $tablelist[] = $table;
                 $records = (array) $records;
                 foreach ($records as $record) {
                     $record = (array) $record;
-                    $record = $record['@attributes'];
+                    $record = (isset($record['@attributes'])) ? $record['@attributes'] : $record;
+
                     $keys = array_map(
                         function($value) { return '`' . $value . '`'; },
                         array_keys($record)
@@ -54,6 +57,9 @@ class PropelTest extends \PHPUnit_Framework_TestCase
                     $stmt->execute();        
                 }
             }
+        }
+        foreach (array_reverse($tablelist) as $table) {
+            $this->tables[] = $table;
         }
         return $this;
     }
@@ -82,10 +88,9 @@ class PropelTest extends \PHPUnit_Framework_TestCase
         return $this->connection;
     }
 
-    public function setTables($tables = array())
+    public function setTable($tables = array())
     {
-        $this->tables = $tables;
+        $this->tables[] = $tables;
         return $this;
     }
 }
-
