@@ -242,9 +242,9 @@ class Adapter implements ServiceLocatorAwareInterface
                     $propel_db_connections[$key],
                     $settings
                 );
-                $settings['adapter']              = ($settings['adapter']) ?: 'mysql';
-                $settings['host']                 = ($settings['host'])    ?: 'localhost';
-                $settings['dbname']               = ($settings['dbname'])  ?: $key;
+                $settings['adapter']              = (@$settings['adapter']) ?: 'mysql';
+                $settings['host']                 = (@$settings['host'])    ?: 'localhost';
+                $settings['dbname']               = (@$settings['dbname'])  ?: $key;
 				if (!isset($settings['dsn'])) {
                     switch ($settings['adapter']) {
                         case 'mysql':

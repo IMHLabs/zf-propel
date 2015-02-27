@@ -140,9 +140,9 @@ class Module implements ConsoleUsage, Config, Autoloader, BootstrapListener
         $db_settings = array();
         foreach ($config as $key => $settings) {
              $settings = array_merge($default_settings,$settings);
-             $settings['adapter']              = ($settings['adapter']) ?: 'mysql';
-             $settings['host']                 = ($settings['host'])    ?: 'localhost';
-             $settings['dbname']               = ($settings['dbname'])  ?: $key;
+             $settings['adapter']              = (@$settings['adapter']) ?: 'mysql';
+             $settings['host']                 = (@$settings['host'])    ?: 'localhost';
+             $settings['dbname']               = (@$settings['dbname'])  ?: $key;
              $dsn = null;
              if (isset($settings['dsn'])) {
                  $dsn = $settings['dsn'];
