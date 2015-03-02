@@ -205,12 +205,12 @@ class Bootstrap
     {
         $config_path        = static::getPath() . '/propel.json';
         $config             = static::getConfig();
-        $conectionName      = static::getConnection();
+        $connectionName     = static::getConnection();
         $propelConfig       = $config['propel'];
         // Create database connection
-        $propelConfig['database']['connections']['domain_tracking']['adapter'] = 'sqlite';
-        $propelConfig['database']['connections']['domain_tracking']['user'] = '';
-        $propelConfig['database']['connections']['domain_tracking']['password'] = '';
+        $propelConfig['database']['connections'][$connectionName]['adapter'] = 'sqlite';
+        $propelConfig['database']['connections'][$connectionName]['user'] = '';
+        $propelConfig['database']['connections'][$connectionName]['password'] = '';
         file_put_contents ($config_path, json_encode(array('propel' => $propelConfig)));     
     }
     
