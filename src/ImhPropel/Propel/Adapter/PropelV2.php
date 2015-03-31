@@ -211,16 +211,17 @@ class PropelV2 extends Adapter
 	 */
     public function status()
 	{
-        $configCreated = $this->createConfig();
+	        $configCreated = $this->createConfig();
         if ($configCreated) {
 			$propel_command			= sprintf(
-    	        '%s/bin/propel migration:status --config-dir="%s" --output-dir="%s"',
+    	        '%s/bin/propel migration:status --verbose --config-dir="%s" --output-dir="%s"',
 			    $this->_getVendorPath(),
 			    $this->getModuleConfigPath(),
 				$this->getModuleMigrationPath());
 			$results = exec($propel_command,$output);
             print "Executing Propel Status for Module: " . $this->getModuleName() . "\n";
             print implode("\n",$output);
+            return $output;
 		}
 	}
 

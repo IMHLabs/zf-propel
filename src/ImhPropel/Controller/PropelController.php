@@ -149,6 +149,37 @@ class PropelController extends AbstractActionController
     }
 
     /**
+	 * Execute migrations up From a timestamp
+	 *
+	 * @return array
+	 */
+    public function upFromAction()
+    {
+        $modules    = $this->_getModules();
+        $request        		= $this->getRequest();
+        $timestamp  = $request->getParam('timestamp');
+        foreach ($modules as $module) {
+            $propelAdapter    = $this->_getAdapter($module);
+            if ($propelAdapter) {
+                $status = $propelAdapter->status();
+                $migrations = array();
+                foreach ($status as $migration) {
+                    if (preg_match('/^\s+PropelMigration/',$migration)) {
+                        $migration = preg_replace('/\D/','',$migration);
+                        if ($migration > $timestamp) {
+                            $migrations[] = $migration; 
+                        }
+                    }
+                }
+                foreach ($migrations as $migration) {
+                    $propelAdapter->down();
+                }
+                $propelAdapter->migrate();
+			}
+		}
+    }
+        
+    /**
 	 * Execute all updates for module(s)
 	 *
 	 * @return void
