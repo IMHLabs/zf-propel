@@ -178,7 +178,7 @@ class PropelController extends AbstractActionController
 			}
 		}
     }
-        
+
     /**
 	 * Execute all updates for module(s)
 	 *
