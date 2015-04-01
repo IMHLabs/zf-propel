@@ -27,10 +27,15 @@ class Adapter implements ServiceLocatorAwareInterface
     protected $_serviceLocator;
 
     /**
+     * @var mixed Module 
+     */
+    protected $_module;
+
+    /**
      * @var string Module name
      */
     protected $_moduleName;
-
+    
     /**
      * @var string Data Directory
      */
@@ -84,10 +89,10 @@ class Adapter implements ServiceLocatorAwareInterface
     public function setModule($moduleName)
     {
         $this->_moduleName              = $moduleName;
-        
         $modulemanager                  = $this->getServiceLocator()->get('ModuleManager');        
 		$moduleObj                      = $modulemanager->loadModule($this->getModuleName());
-        $module_config 	                = $moduleObj->getConfig();
+        $this->_module                  = $moduleObj;
+		$module_config 	                = $moduleObj->getConfig();
         $this->_module_path             = $this->_data_dir . '/' . $moduleName;
         $this->_module_config_path      = $this->_module_path . '/config';
         $this->_module_sql_path         = $this->_module_path . '/sql';
@@ -98,6 +103,16 @@ class Adapter implements ServiceLocatorAwareInterface
 	}
     
     /**
+	 * Get module 
+	 *
+	 * @return string
+	 */
+    public function getModule()
+    {
+        return $this->_module;
+	}
+	
+	/**
 	 * Get module Name
 	 *
 	 * @return string
@@ -291,6 +306,18 @@ class Adapter implements ServiceLocatorAwareInterface
             }
         }
         return array();
+	}
+	
+	/**
+	 * Get module
+	 *
+	 * @return string
+	 */
+	public function getModuleDbConnection()
+	{
+	    $config = $this->_module->getConfig();
+	    $connection = array_keys($config['propel']['database']['connections']);
+	    return array_shift($connection);
 	}
 	
 	/**

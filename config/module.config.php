@@ -134,6 +134,15 @@ return array(
                         )
                     )
                 ),
+                'propel-migration-up-from' => array(
+                    'options' => array(
+                        'route'    => 'propel migration-up-from <timestamp> <namespace>',
+                        'defaults' => array(
+                            'controller' => 'ImhPropel\Controller\Propel',
+                            'action'     => 'up-from'
+                        )
+                    )
+                ),
                 'propel-model-build' => array(
                     'options' => array(
                         'route'    => 'propel model-build <namespace>',

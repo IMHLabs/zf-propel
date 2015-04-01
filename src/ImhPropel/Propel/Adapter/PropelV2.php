@@ -17,7 +17,8 @@
 namespace ImhPropel\Propel\Adapter;
 
 use ImhPropel\Propel\Adapter;
-use Propel\Generator\Manager\MigrationManager;
+use ImhPropel\Propel\Generator\Manager\MigrationManager;
+use Propel\Runtime\Propel;
 
 class PropelV2 extends Adapter
 {
@@ -148,20 +149,27 @@ class PropelV2 extends Adapter
 	 */
     public function dataMigration()
 	{
-        $migrationGenerated = $this->diff();
-        if (!$migrationGenerated) {
-            print "\nBuilding Data Migration File for Module: " . $this->getModuleName() . "\n";
-            //Generate Data Migration File Here
-            $manager = new MigrationManager();
-            $timestamp = time();
-            $migrationFileName  = $manager->getMigrationFileName($timestamp);
-            $migrationClassBody = $manager->getMigrationClassBody(array(), array(), $timestamp, null);
-            $migration_path         = $this->getModuleMigrationPath();
-            $filename = $migration_path . '/' . $migrationFileName;
-            file_put_contents($filename, $migrationClassBody); 
-            print "\n" . realpath($filename) . " file successfully created for data migration\n";
-            print "Once the migration class is valid, call the \"migrate\" task to execute it.\n";
-        }
+        print "\nBuilding Data Migration File for Module: " . $this->getModuleName() . "\n";
+        $manager = new MigrationManager();
+        $timestamp = time();
+        $migrationFileName  = $manager->getMigrationFileName($timestamp);
+        $migrationQuery = array(
+            $this->getModuleDbConnection() => '
+                # This is a fix for InnoDB in MySQL >= 4.1.x
+                # It "suspends judgement" for fkey relationships until are tables are set.
+                SET FOREIGN_KEY_CHECKS = 0;
+
+                # This restores the fkey checks, after having unset them earlier
+                SET FOREIGN_KEY_CHECKS = 1;
+                ',
+         );
+        $migrationClassBody = $manager->getMigrationClassBody($migrationQuery, $migrationQuery, $timestamp, null,  $this->getModuleName());
+        $migration_path         = $this->getModuleMigrationPath();
+        $filename = $migration_path . '/' . $migrationFileName;
+        //Generate Data Migration File Here
+        file_put_contents($filename, $migrationClassBody); 
+        print "\n" . realpath($filename) . " file successfully created for data migration\n";
+        print "Once the migration class is valid, call the \"migrate\" task to execute it.\n";
 	}
 
     /**
@@ -211,16 +219,17 @@ class PropelV2 extends Adapter
 	 */
     public function status()
 	{
-        $configCreated = $this->createConfig();
+	        $configCreated = $this->createConfig();
         if ($configCreated) {
 			$propel_command			= sprintf(
-    	        '%s/bin/propel migration:status --config-dir="%s" --output-dir="%s"',
+    	        '%s/bin/propel migration:status --verbose --config-dir="%s" --output-dir="%s"',
 			    $this->_getVendorPath(),
 			    $this->getModuleConfigPath(),
 				$this->getModuleMigrationPath());
 			$results = exec($propel_command,$output);
             print "Executing Propel Status for Module: " . $this->getModuleName() . "\n";
             print implode("\n",$output);
+            return $output;
 		}
 	}
 
