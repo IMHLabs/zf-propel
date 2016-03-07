@@ -98,7 +98,9 @@ class Adapter implements ServiceLocatorAwareInterface
         $this->_module_sql_path         = $this->_module_path . '/sql';
         $this->_module_schema_path      = realpath($module_config['propel']['paths']['schema']);
         $this->_module_class_path       = realpath($module_config['propel']['paths']['class']);
-        $this->_module_migration_path   = realpath($module_config['propel']['paths']['migrations']);
+        if ($module_config['propel']['paths']['migrations']) {
+            $this->_module_migration_path   = realpath($module_config['propel']['paths']['migrations']);
+        }            
         return $this;
 	}
     
