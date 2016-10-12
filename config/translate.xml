@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:output indent="yes" />
+    <xsl:template match="/database">
+        <database>
+            <xsl:attribute name="name"><xsl:value-of select="@name" /></xsl:attribute>
+            <xsl:if test="@defaultIdMethod">
+                <xsl:attribute name="defaultIdMethod"><xsl:value-of select="@defaultIdMethod" /></xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@defaultTranslateMethode">
+                <xsl:attribute name="defaultTranslateMethode"><xsl:value-of select="@defaultTranslateMethode" /></xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@package">
+                <xsl:attribute name="package"><xsl:value-of select="@package" /></xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@schema">
+                <xsl:attribute name="schema"><xsl:value-of select="@schema" /></xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@namespace">
+                <xsl:attribute name="namespace"><xsl:value-of select="@namespace" /></xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@baseClass">
+                <xsl:attribute name="baseClass"><xsl:value-of select="@baseClass" /></xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@basePeer">
+                <xsl:attribute name="basePeer"><xsl:value-of select="@basePeer" /></xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@defaultPhpNamingMethod">
+                <xsl:attribute name="defaultPhpNamingMethod"><xsl:value-of select="@defaultPhpNamingMethod" /></xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@heavyIndexing">
+                <xsl:attribute name="heavyIndexing"><xsl:value-of select="@heavyIndexing" /></xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@tablePrefix">
+                <xsl:attribute name="tablePrefix"><xsl:value-of select="@tablePrefix" /></xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@defaultStringFormat">
+                <xsl:attribute name="defaultStringFormat"><xsl:value-of select="@defaultStringFormat" /></xsl:attribute>
+            </xsl:if>
+            <xsl:for-each select="table">
+                <table>
+                    <xsl:attribute name="name"><xsl:value-of select="@name" /></xsl:attribute>
+                    <xsl:if test="@phpName">
+                        <xsl:attribute name="phpName"><xsl:value-of select="@phpName" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@idMethod">
+                        <xsl:attribute name="idMethod"><xsl:value-of select="@idMethod" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@skipSql">
+                        <xsl:attribute name="skipSql"><xsl:value-of select="@skipSql" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@readOnly">
+                        <xsl:attribute name="readOnly"><xsl:value-of select="@readOnly" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@abstract">
+                        <xsl:attribute name="abstract"><xsl:value-of select="@abstract" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@isCrossRef">
+                        <xsl:attribute name="isCrossRef"><xsl:value-of select="@isCrossRef" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@treeMode">
+                        <xsl:attribute name="treeMode"><xsl:value-of select="@treeMode" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@package">
+                        <xsl:attribute name="package"><xsl:value-of select="@package" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@schema">
+                        <xsl:attribute name="schema"><xsl:value-of select="@schema" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@namespace">
+                        <xsl:attribute name="namespace"><xsl:value-of select="@namespace" /></xsl:attribute>        
+                    </xsl:if>
+                    <xsl:if test="@baseClass">
+                        <xsl:attribute name="baseClass"><xsl:value-of select="@baseClass" /></xsl:attribute>        
+                    </xsl:if>
+                    <xsl:if test="@basePeer">
+                        <xsl:attribute name="basePeer"><xsl:value-of select="@basePeer" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@alias">
+                        <xsl:attribute name="alias"><xsl:value-of select="@alias" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@interface">
+                        <xsl:attribute name="interface"><xsl:value-of select="@interface" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@phpNamingMethod">
+                        <xsl:attribute name="phpNamingMethod"><xsl:value-of select="@phpNamingMethod" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@heavyIndexing">
+                        <xsl:attribute name="heavyIndexing"><xsl:value-of select="@heavyIndexing" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@description">
+                        <xsl:attribute name="description"><xsl:value-of select="@description" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:if test="@defaultStringFormat">
+                        <xsl:attribute name="defaultStringFormat"><xsl:value-of select="@defaultStringFormat" /></xsl:attribute>
+                    </xsl:if>
+                    <xsl:for-each select="column">
+                        <column>
+                            <xsl:attribute name="name"><xsl:value-of select="@name" /></xsl:attribute>
+                            <xsl:if test="@phpName">
+                                <xsl:attribute name="phpName"><xsl:value-of select="@phpName" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@peerName">
+                               <xsl:attribute name="peerName"><xsl:value-of select="@peerName" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@primaryKey">
+                                <xsl:attribute name="primaryKey"><xsl:value-of select="@primaryKey" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@required">
+                                <xsl:attribute name="required"><xsl:value-of select="@required" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@phpType">
+                                <xsl:attribute name="phpType"><xsl:value-of select="@phpType" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@type">
+                                <xsl:attribute name="type"><xsl:value-of select="@type" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@size">
+                                <xsl:attribute name="size"><xsl:value-of select="@size" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@scale">
+                                <xsl:attribute name="scale"><xsl:value-of select="@scale" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@default">
+                                <xsl:attribute name="default"><xsl:value-of select="@default" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@defaultValue">
+                                <xsl:attribute name="defaultValue"><xsl:value-of select="@defaultValue" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@defaultExpr">
+                                <xsl:attribute name="defaultExpr"><xsl:value-of select="@defaultExpr" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@autoIncrement">
+                                <xsl:attribute name="autoIncrement"><xsl:value-of select="@autoIncrement" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@inheritance">
+                                <xsl:attribute name="inheritance"><xsl:value-of select="@inheritance" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@phpNamingMethod">
+                                <xsl:attribute name="phpNamingMethod"><xsl:value-of select="@phpNamingMethod" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@description">
+                               <xsl:attribute name="description"><xsl:value-of select="@description" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@lazyLoad">
+                                <xsl:attribute name="lazyLoad"><xsl:value-of select="@lazyLoad" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@primaryString">
+                                <xsl:attribute name="primaryString"><xsl:value-of select="@primaryString" /></xsl:attribute>
+                            </xsl:if>
+                        </column>
+                    </xsl:for-each>
+                    <xsl:for-each select="inheritance">
+                        <inheritance>
+                            <xsl:attribute name="key"><xsl:value-of select="@key" /></xsl:attribute>
+                            <xsl:attribute name="class"><xsl:value-of select="@class" /></xsl:attribute>
+                            <xsl:if test="@package">
+                                <xsl:attribute name="package"><xsl:value-of select="@package" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@extends">
+                                <xsl:attribute name="extends"><xsl:value-of select="@extends" /></xsl:attribute>
+                            </xsl:if>
+                        </inheritance>
+                    </xsl:for-each>
+                    <xsl:for-each select="foreign-key">
+                        <foreign-key>
+                            <xsl:attribute name="foreignTable"><xsl:value-of select="@foreignTable" /></xsl:attribute>
+                            <xsl:if test="@foreignSchema">
+                                <xsl:attribute name="foreignSchema"><xsl:value-of select="@foreignSchema" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@name">
+                                <xsl:attribute name="name"><xsl:value-of select="@name" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@phpName">
+                                <xsl:attribute name="phpName"><xsl:value-of select="@phpName" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@refPhpName">
+                                <xsl:attribute name="refPhpName"><xsl:value-of select="@refPhpName" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@onUpdate">
+                                <xsl:attribute name="onUpdate"><xsl:value-of select="@onUpdate" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@onDelete">
+                                <xsl:attribute name="onDelete"><xsl:value-of select="@onDelete" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:if test="@skipSql">
+                                <xsl:attribute name="skipSql"><xsl:value-of select="@skipSql" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:for-each select="reference">
+                                <reference>
+                                    <xsl:attribute name="local"><xsl:value-of select="@local" /></xsl:attribute>
+                                    <xsl:attribute name="foreign"><xsl:value-of select="@foreign" /></xsl:attribute>
+                                </reference>
+                            </xsl:for-each>
+                            <xsl:for-each select="vendor">
+                                <vendor>
+                                    <xsl:attribute name="type"><xsl:value-of select="@type" /></xsl:attribute>
+                                    <xsl:for-each select="parameter">
+                                        <parameter>
+                                            <xsl:attribute name="name"><xsl:value-of select="@name" /></xsl:attribute>
+                                            <xsl:attribute name="value"><xsl:value-of select="@value" /></xsl:attribute>
+                                        </parameter>
+                                    </xsl:for-each>
+                                </vendor>
+                            </xsl:for-each>
+                        </foreign-key>
+                    </xsl:for-each>
+                    <xsl:for-each select="reference">
+                        <reference>
+                            <xsl:attribute name="local"><xsl:value-of select="@local" /></xsl:attribute>
+                            <xsl:attribute name="foreign"><xsl:value-of select="@foreign" /></xsl:attribute>
+                        </reference>
+                    </xsl:for-each>
+                    <xsl:for-each select="validator">
+                        <validator>
+                            <xsl:attribute name="column"><xsl:value-of select="@column" /></xsl:attribute>
+                            <xsl:if test="@translate">
+                                <xsl:attribute name="translate"><xsl:value-of select="@translate" /></xsl:attribute>
+                            </xsl:if>
+                            <xsl:for-each select="rule">
+                                <rule>
+                                    <xsl:attribute name="name"><xsl:value-of select="@name" /></xsl:attribute>
+                                    <xsl:if test="@class">
+                                        <xsl:attribute name="class"><xsl:value-of select="@class" /></xsl:attribute>
+                                    </xsl:if>
+                                    <xsl:if test="@value">
+                                        <xsl:attribute name="value"><xsl:value-of select="@value" /></xsl:attribute>
+                                    </xsl:if>
+                                    <xsl:if test="@size">
+                                        <xsl:attribute name="size"><xsl:value-of select="@size" /></xsl:attribute>
+                                    </xsl:if>
+                                    <xsl:if test="@message">
+                                        <xsl:attribute name="message"><xsl:value-of select="@message" /></xsl:attribute>
+                                    </xsl:if>
+                                </rule>
+                            </xsl:for-each>
+                        </validator>
+                    </xsl:for-each>
+                    <xsl:for-each select="behavior">
+                        <behavior>
+                            <xsl:attribute name="name"><xsl:value-of select="@name" /></xsl:attribute>
+                            <xsl:for-each select="parameter">
+                                <parameter>
+                                    <xsl:attribute name="name"><xsl:value-of select="@name" /></xsl:attribute>
+                                    <xsl:attribute name="value"><xsl:value-of select="@value" /></xsl:attribute>
+                                </parameter>
+                            </xsl:for-each>
+                        </behavior>
+                    </xsl:for-each>
+                    <vendor>
+                        <xsl:attribute name="type">mysql</xsl:attribute>
+                        <parameter>
+                            <xsl:attribute name="name">Engine</xsl:attribute>
+                            <xsl:attribute name="value">MyISAM</xsl:attribute>
+                        </parameter>
+                    </vendor>
+                </table>
+            </xsl:for-each>
+        </database>
+    </xsl:template>
+</xsl:stylesheet>

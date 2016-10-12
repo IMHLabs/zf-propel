@@ -178,6 +178,7 @@ class Bootstrap
     {
         static::_deleteDatabase();
         static::_createConnection();
+        static::_createTestSchema();
         static::_createMigrations();
         static::_applyMigrations();
    }
@@ -235,6 +236,47 @@ class Bootstrap
     }
     
     /**
+     * Delete migration(s) generated during previous test execution
+     */
+    protected static function _deleteTestSchema()
+    {
+        $schemaDir = static::getPath() . '/schema';
+        //Destroy old test migrations
+        if (realpath($schemaDir)) {
+            if ($handle = opendir(realpath($schemaDir))) {
+                while (false !== ($entry = readdir($handle))) {
+                    if (preg_match('/^schema/',$entry)) {
+                        $filepath = realpath($schemaDir . '/' . $entry);
+                        unlink($filepath);
+                    }
+                }
+                closedir($handle);
+            }
+        }
+    }
+    
+    /**
+     * Create schema for test database
+     */
+    protected static function _createTestSchema()
+    {
+        static::_deleteTestSchema();
+        $modulemanager          = static::getServiceManager()->get('ModuleManager');
+        $moduleObj              = $modulemanager->loadModule(static::getModule());
+        $module_config          = $moduleObj->getConfig();
+        $module_schema_path     = realpath($module_config['propel']['paths']['schema']);
+        $xsltFile               = realpath(dirname(dirname(dirname(dirname(__DIR__)))) . '/config/translate.xsl');
+        $output                 = static::getPath() . '/config/schema.xml';
+        $xml                    = static::fileToDomDoc($module_schema_path . '/schema.xml');
+        $xsl                    = static::fileToDomDoc($xsltFile);
+        $processor              = new \XSLTProcessor;
+        $processor->importStyleSheet($xsl);
+        $fp = fopen($output, 'w');
+        fwrite($fp, $processor->transformToXML($xml));
+        fclose($fp);
+    }
+    
+    /**
      * Create migration(s) to reflect most recent version of database
      */
     protected static function _createMigrations()
@@ -242,13 +284,12 @@ class Bootstrap
         static::_deleteMigrations();
         $modulemanager          = static::getServiceManager()->get('ModuleManager');
         $moduleObj              = $modulemanager->loadModule(static::getModule());
-        $module_config             = $moduleObj->getConfig();
-        $module_schema_path     = realpath($module_config['propel']['paths']['schema']);
+        $module_config          = $moduleObj->getConfig();
         $propel_command            = sprintf(
             '%s/bin/propel migration:diff --config-dir="%s" --schema-dir="%s" --output-dir="%s"',
             static::findParentPath('vendor'),
             static::getPath(),
-            $module_schema_path,
+            static::getPath() . '/config',
             static::getPath() . '/migrations');
         $results = exec($propel_command,$output);
     }
@@ -283,5 +324,14 @@ class Bootstrap
         }
         return $dir . '/' . $path;
     }
+    
+    protected static function fileToDomDoc($filename)
+    {
+        $dom        = new \DOMDocument;
+        $xmldata    = file_get_contents($filename);
+        $dom->loadXML($xmldata);
+        return $dom;
+    }
+    
 }
 
