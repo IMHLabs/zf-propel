@@ -18,6 +18,7 @@ The suggested installation method is via [composer](http://getcomposer.org/):
 Composer can be set to automatically apply changes on install/update by including the following
 script commands in the composer.json file.
 
+```php
 "scripts": {
     "post-install-cmd": [
         "ImhPropel\\Composer\\ScriptHandler::updatePropel"
@@ -26,11 +27,13 @@ script commands in the composer.json file.
         "ImhPropel\\Composer\\ScriptHandler::updatePropel"
     ]
 }
+```
 
 ## Application Configuration
 
 Here is an sample local configuration file
 
+```php
 <?php
 return array(
     'propel' => array( 
@@ -45,9 +48,11 @@ return array(
         ),
     )
 );
+```
 
 Here is an sample global configuration file.
 
+```php
 <?php
 return array(
     'propel' => array( 
@@ -68,12 +73,13 @@ return array(
         ),
     )
 );
-
+```
 
 ## Module Configuration
 
 Here is an annotated sample module configuration file 
 
+```php
 <?php
 return array(
     "propel" => array(
@@ -115,56 +121,91 @@ return array(
         )
     ),
 );
+```
 
 ## Console Commands
 
+```
 php index.php propel build [all|NAMESPACE|[comma delimited NAMESPACES]                
  - Build the model classes based on Propel XML schemas
- 
+```
+
+```
 php index.php propel build-sql [all|NAMESPACE|[comma delimited NAMESPACES]            
  - Build SQL files
+```
 
+```
 php index.php propel diff [all|NAMESPACE|[comma delimited NAMESPACES]                 
  - Generate diff classes
+```
 
+```
 php index.php propel migration-data [all|NAMESPACE|[comma delimited NAMESPACES]       
  - Generate data migration file
+```
 
+```
 php index.php propel migrate-data [all|NAMESPACE|[comma delimited NAMESPACES]         
  - Generate data migration file
+```
 
+```
 php index.php propel down [all|NAMESPACE|[comma delimited NAMESPACES]                 
  - Execute migrations down
+```
 
+```
 php index.php propel migrate [all|NAMESPACE|[comma delimited NAMESPACES]              
  - Execute all pending migrations
+```
 
+```
 php index.php propel status [all|NAMESPACE|[comma delimited NAMESPACES]               
  - Get migration status
+```
 
+```
 php index.php propel up [all|NAMESPACE|[comma delimited NAMESPACES]                   
  - Execute migrations up
+```
 
+```
 php index.php propel migration-diff [all|NAMESPACE|[comma delimited NAMESPACES]       
  - Generate diff classes
+```
 
+```
 php index.php propel migration-down [all|NAMESPACE|[comma delimited NAMESPACES]       
  - Execute migrations down
+```
 
+```
 php index.php propel migration-migrate [all|NAMESPACE|[comma delimited NAMESPACES]    
  - Execute all pending migrations
+```
 
+```
 php index.php propel migration-status [all|NAMESPACE|[comma delimited NAMESPACES]     
  - Get migration status
+```
 
+```
 php index.php propel migration-up [all|NAMESPACE|[comma delimited NAMESPACES]         
  - Execute migrations up
+```
 
+```
 php index.php propel model-build [all|NAMESPACE|[comma delimited NAMESPACES]          
  - Build the model classes based on Propel XML schemas
+```
 
+```
 php index.php propel sql-build [all|NAMESPACE|[comma delimited NAMESPACES]            
  - Build SQL files
+```
 
+```
 php index.php propel update [all|NAMESPACE|[comma delimited NAMESPACES]               
  - Execute pending migrations, build SQL files, build Propel classes
+```
