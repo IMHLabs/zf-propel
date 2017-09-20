@@ -44,6 +44,10 @@ return array(
                     'user'       => 'my_db_user',
                     'password'   => 's3cr3t',
                 ),
+                'my_db' => array(
+                    'dbname' => 'my_db_name',
+                    'logging_enabled' => true,
+                ),
             )
         ),
     )
