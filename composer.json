@@ -15,7 +15,8 @@
     "minimum-stability": "dev",
     "require": {
         "php": ">=5.3.3",
-        "propel/propel": "2.0.*@dev"
+        "propel/propel": "2.0.*@dev",
+        "monolog/monolog": "^1.23"
     },
     "autoload": {
         "psr-0": {

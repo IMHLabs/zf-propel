@@ -296,10 +296,24 @@ class Adapter implements ServiceLocatorAwareInterface
                             break;
                     }
                 }
+                // Enable logging for migrations
+                $loggingEnabled = (@$settings['logging_enabled']) ?: false;
+                if ($loggingEnabled) {
+                    $logDir     = (array_key_exists('log_dir', $settings)) ? $settings['log_dir'] : 'data/logs';
+                    $logfile    = (@$settings['log_file']) ?: $key . '.log';
+                    if ($logDir) {
+                        $logfile = realpath($logDir) . '/' . $logfile;
+                    }
+                    $module_config['runtime']['log'][$key] = array( 
+                        'type' => 'stream',
+                        'path' => $logfile,
+                    );
+                    $settings['classname'] = 'Propel\Runtime\Connection\DebugPDO';
+                }
                 //Unset Module specific settings, not needed for propel configuration
-                unset($settings['host'],$settings['dbname']);
+                unset($settings['host'],$settings['dbname'],$settings['logging_enabled'],$settings['log_file']);
 				$module_config['database']['connections'][$key] = $settings;
-            }
+			}
 			if ($module_config) {
                 //Unset Module specific settings, not needed for propel configuration
 				unset($module_config['paths'], $module_config['data_directory']);

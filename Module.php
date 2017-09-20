@@ -24,6 +24,8 @@ use Zend\ModuleManager\Feature\ConfigProviderInterface as Config;
 use Zend\ModuleManager\Feature\ConsoleUsageProviderInterface as ConsoleUsage;
 use Propel\Runtime\Propel;
 use Propel\Runtime\Connection\ConnectionManagerSingle;
+use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 class Module implements ConsoleUsage, Config, Autoloader, BootstrapListener
 {
@@ -190,8 +192,21 @@ class Module implements ConsoleUsage, Config, Autoloader, BootstrapListener
                         'password' => $settings['password'],
                     )
                 );
-                $serviceContainer->setConnectionManager($key, $manager);
-             }
+                $serviceContainer->setConnectionManager($key, $manager); 
+                $loggingEnabled = (@$settings['logging_enabled']) ?: false;
+                if ($loggingEnabled) {
+                    $logDir     = (array_key_exists('log_dir', $settings)) ? $settings['log_dir'] : 'data/logs';
+                    $logfile    = (@$settings['log_file']) ?: $key . '.log';
+                    if ($logDir) {
+                        $logfile = realpath($logDir) . '/' . $logfile;
+                    }
+                    $logger     = new Logger($key);
+                    $logger->pushHandler(new StreamHandler($logfile, Logger::DEBUG));
+                    $serviceContainer->setLogger($key, $logger);
+                    $con = $serviceContainer->getConnectionManager($key)->getWriteConnection($serviceContainer->getAdapter($key));
+                    $con->useDebug(true);
+                }
+            }
         }
     }
 }
