@@ -311,7 +311,7 @@ class Adapter implements ServiceLocatorAwareInterface
                     $settings['classname'] = 'Propel\Runtime\Connection\DebugPDO';
                 }
                 //Unset Module specific settings, not needed for propel configuration
-                unset($settings['host'],$settings['dbname'],$settings['logging_enabled'],$settings['log_file']);
+                unset($settings['host'],$settings['dbname'],$settings['logging_enabled'],$settings['log_dir'],$settings['log_file']);
                 $module_config['database']['connections'][$key] = $settings;
             }
             if ($module_config) {
