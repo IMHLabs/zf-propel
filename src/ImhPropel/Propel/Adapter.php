@@ -6,7 +6,7 @@
  * @version $Id$
  * @author IMH Development <development@inmotionhosting.com>
  */
-	
+    
 /**
  * InMotion Hosting Source Code
  * @package ImhPropel/Propel/Adapter
@@ -71,28 +71,28 @@ class Adapter implements ServiceLocatorAwareInterface
      */
     protected $_module_migration_path;
     
-	public function __construct(ServiceLocatorInterface $serviceLocator)
-	{
-		$this->setServiceLocator($serviceLocator);
+    public function __construct(ServiceLocatorInterface $serviceLocator)
+    {
+        $this->setServiceLocator($serviceLocator);
         //Store Data Directory
         $config = $this->getServiceLocator()->get('config');
         $config = $config['propel'];
         $this->_data_dir = $config['data_directory'];
-	}
+    }
     
     /**
-	 * Set module Name
-	 *
+     * Set module Name
+     *
      * @param string $module Module Name
-	 * @return void
-	 */
+     * @return void
+     */
     public function setModule($moduleName)
     {
         $this->_moduleName              = $moduleName;
         $modulemanager                  = $this->getServiceLocator()->get('ModuleManager');        
-		$moduleObj                      = $modulemanager->loadModule($this->getModuleName());
+        $moduleObj                      = $modulemanager->loadModule($this->getModuleName());
         $this->_module                  = $moduleObj;
-		$module_config 	                = $moduleObj->getConfig();
+        $module_config                     = $moduleObj->getConfig();
         $this->_module_path             = $this->_data_dir . '/' . $moduleName;
         $this->_module_config_path      = $this->_module_path . '/config';
         $this->_module_sql_path         = $this->_module_path . '/sql';
@@ -102,159 +102,159 @@ class Adapter implements ServiceLocatorAwareInterface
             $this->_module_migration_path   = realpath($module_config['propel']['paths']['migrations']);
         }            
         return $this;
-	}
+    }
     
     /**
-	 * Get module 
-	 *
-	 * @return string
-	 */
+     * Get module 
+     *
+     * @return string
+     */
     public function getModule()
     {
         return $this->_module;
-	}
-	
-	/**
-	 * Get module Name
-	 *
-	 * @return string
-	 */
+    }
+    
+    /**
+     * Get module Name
+     *
+     * @return string
+     */
     public function getModuleName()
     {
         return $this->_moduleName;
-	}
+    }
     
     /**
-	 * Get Data Directory
-	 *
-	 * @return string
-	 */
+     * Get Data Directory
+     *
+     * @return string
+     */
     public function getDataDir()
     {
         return $this->_data_dir;
-	}
+    }
     
     /**
-	 * Get Module Path
-	 *
-	 * @return string
-	 */
+     * Get Module Path
+     *
+     * @return string
+     */
     public function getModulePath()
     {
         return $this->_module_path;
-	}
+    }
 
     /**
-	 * Get Module Config Path
-	 *
-	 * @return string
-	 */
+     * Get Module Config Path
+     *
+     * @return string
+     */
     public function getModuleConfigPath()
     {
         return $this->_module_config_path;
-	}
+    }
 
     /**
-	 * Get Module Sql Path
-	 *
-	 * @return string
-	 */
+     * Get Module Sql Path
+     *
+     * @return string
+     */
     public function getModuleSqlPath()
     {
         return $this->_module_sql_path;
-	}
+    }
 
     /**
-	 * Get Module Schema Path
-	 *
-	 * @return void
-	 */
+     * Get Module Schema Path
+     *
+     * @return void
+     */
     public function getModuleSchemaPath()
-	{
+    {
         return $this->_module_schema_path;
-	}
+    }
     
     /**
-	 * Get Module Class Path
-	 *
-	 * @return void
-	 */
+     * Get Module Class Path
+     *
+     * @return void
+     */
     public function getModuleClassPath()
-	{
+    {
         return $this->_module_class_path;
-	}
+    }
     
     /**
-	 * Get Module Schema Path
-	 *
-	 * @return void
-	 */
+     * Get Module Schema Path
+     *
+     * @return void
+     */
     public function getModuleMigrationPath()
-	{
+    {
         return $this->_module_migration_path;
-	}
+    }
 
     /**
-	 * Create application data directories for a module
-	 * to store programatically created files
-	 *
+     * Create application data directories for a module
+     * to store programatically created files
+     *
      * @param string $module Module Name
-	 * @return void
-	 */
+     * @return void
+     */
     public function createDataDirectories()
     {
         $data_dir           = $this->getDataDir();
         $module_path        = $this->getModulePath();
         $sql_path           = $this->getModuleSqlPath();
         $config_path        = $this->getModuleConfigPath();
-		if (!file_exists($data_dir))      {   mkdir ($data_dir);     }
-		if (!file_exists($module_path))   {   mkdir ($module_path);  }
-		if (!file_exists($sql_path))      {   mkdir ($sql_path);     }
-		if (!file_exists($config_path))   {   mkdir ($config_path);  }
-	}
+        if (!file_exists($data_dir))      {   mkdir ($data_dir);     }
+        if (!file_exists($module_path))   {   mkdir ($module_path);  }
+        if (!file_exists($sql_path))      {   mkdir ($sql_path);     }
+        if (!file_exists($config_path))   {   mkdir ($config_path);  }
+    }
     
-	/**
-	 * Set Service Locator
-	 *
+    /**
+     * Set Service Locator
+     *
      * @param ServiceLocatorInterface $serviceLocator 
-	 * @return ImhPropel/Propel/Adapter
-	 */
+     * @return ImhPropel/Propel/Adapter
+     */
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->_serviceLocator = $serviceLocator;
         return $this;
     }
-	
-    /**
-	 * Get Service Locator
-	 *
-	 * @return ServiceLocatorInterface
-	 */
-	public function getServiceLocator()
-	{
-		return $this->_serviceLocator;
-	}
     
     /**
-	 * Get module propel Configuration
-	 *
+     * Get Service Locator
+     *
+     * @return ServiceLocatorInterface
+     */
+    public function getServiceLocator()
+    {
+        return $this->_serviceLocator;
+    }
+    
+    /**
+     * Get module propel Configuration
+     *
      * @param string $module Module Name
-	 * @return void
-	 */
+     * @return void
+     */
     protected function _getPropelConfig()
-	{
-		$modulemanager  = $this->getServiceLocator()->get('ModuleManager');
-		$moduleObj 		= $modulemanager->loadModule($this->getModuleName());
-        $module_config 	= $moduleObj->getConfig();
+    {
+        $modulemanager  = $this->getServiceLocator()->get('ModuleManager');
+        $moduleObj         = $modulemanager->loadModule($this->getModuleName());
+        $module_config     = $moduleObj->getConfig();
         //Check if module has configuration for propel
         if (isset($module_config['propel'])) {
-			$module_config          = $module_config['propel'];
-			$config                 = $this->getServiceLocator()->get('config');
-			$propel_db_connections  = $config['propel']['database']['connections'];
-			foreach ($module_config['database']['connections'] as $key => $settings) {
+            $module_config          = $module_config['propel'];
+            $config                 = $this->getServiceLocator()->get('config');
+            $propel_db_connections  = $config['propel']['database']['connections'];
+            foreach ($module_config['database']['connections'] as $key => $settings) {
                 $propel_db_connections['default'] = ($propel_db_connections['default']) ?: array();
                 $propel_db_connections[$key]      = ($propel_db_connections[$key]) ?: array();
-				$settings = array_merge(
+                $settings = array_merge(
                     $propel_db_connections['default'],
                     $propel_db_connections[$key],
                     $settings
@@ -262,7 +262,7 @@ class Adapter implements ServiceLocatorAwareInterface
                 $settings['adapter']              = (@$settings['adapter']) ?: 'mysql';
                 $settings['host']                 = (@$settings['host'])    ?: 'localhost';
                 $settings['dbname']               = (@$settings['dbname'])  ?: $key;
-				if (!isset($settings['dsn'])) {
+                if (!isset($settings['dsn'])) {
                     switch ($settings['adapter']) {
                         case 'mysql':
                             $settings['dsn'] = sprintf(
@@ -312,38 +312,37 @@ class Adapter implements ServiceLocatorAwareInterface
                 }
                 //Unset Module specific settings, not needed for propel configuration
                 unset($settings['host'],$settings['dbname'],$settings['logging_enabled'],$settings['log_file']);
-				$module_config['database']['connections'][$key] = $settings;
-			}
-			if ($module_config) {
+                $module_config['database']['connections'][$key] = $settings;
+            }
+            if ($module_config) {
                 //Unset Module specific settings, not needed for propel configuration
-				unset($module_config['paths'], $module_config['data_directory']);
-				$module_config = array('propel' => $module_config);
+                unset($module_config['paths'], $module_config['data_directory']);
+                $module_config = array('propel' => $module_config);
                 return $module_config;
             }
         }
         return array();
-	}
-	
-	/**
-	 * Get module
-	 *
-	 * @return string
-	 */
-	public function getModuleDbConnection()
-	{
-	    $config = $this->_module->getConfig();
-	    $connection = array_keys($config['propel']['database']['connections']);
-	    return array_shift($connection);
-	}
-	
-	/**
-	 * Get vendor path
-	 *
-	 * @return string
-	 */
-	protected function _getVendorPath()
-	{
-	    return realpath('./vendor');
-	}
-	
+    }
+    
+    /**
+     * Get module
+     *
+     * @return string
+     */
+    public function getModuleDbConnection()
+    {
+        $config = $this->_module->getConfig();
+        $connection = array_keys($config['propel']['database']['connections']);
+        return array_shift($connection);
+    }
+    
+    /**
+     * Get vendor path
+     *
+     * @return string
+     */
+    protected function _getVendorPath()
+    {
+        return realpath('./vendor');
+    }
 }
