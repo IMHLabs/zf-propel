@@ -158,22 +158,22 @@ class MigrationBootstrap
     
     protected static function generateDsn($connectionName, $config) 
     {
-        if ($config[$connectionName]['dbname']) {
+        if (isset($config[$connectionName]['dbname'])) {
             $dbName = $config[$connectionName]['dbname'];
         } else {
             $dbName = $config['default']['dbname'];
         }
-        if ($config[$connectionName]['host']) {
+        if (isset($config[$connectionName]['host'])) {
             $dbHost = $config[$connectionName]['host'];
         } else {
             $dbHost = $config['default']['host'];
         }
-        if ($config[$connectionName]['user']) {
+        if (isset($config[$connectionName]['user'])) {
             $dbUser = $config[$connectionName]['user'];
         } else {
             $dbUser = $config['default']['user'];
         }
-        if ($config[$connectionName]['password']) {
+        if (isset($config[$connectionName]['password'])) {
             $dbPass = $config[$connectionName]['password'];
         } else {
             $dbPass = $config['default']['password'];
